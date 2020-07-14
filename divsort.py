@@ -1,55 +1,9 @@
 import sys
-def countsort(a,n,mn,mx):
-	ra=[]
-	l=[0]*(mx-mn+1)
-	p=0
-	for i in range(n):
-		l[a[i]-mn]+=1
-	for i in range(len(l)):
-		for j in range(l[i]):
-			ra.append(mn+i)
-	return ra
-
-def par(a,l,r):
-	i=l-1
-	pivot=a[r]
-	for j in range(l,r):
-		if a[j]<pivot:
-			i+=1
-			a[j],a[i]=a[i],a[j]
-	a[i+1],a[r]=a[r],a[i+1]
-	return i+1
-
-def qs(a,l,r):
-	if l<r:
-		pi=par(a,l,r)
-
-		qs(a,l,pi-1)
-		qs(a,pi+1,r)
-
-
-def merge(l,r):
-	a=[]
-	li=0
-	ri=0
-	nl=len(l)
-	nr=len(r)
-	while li<nl and ri<nr:
-		if l[li]<=r[ri]:
-			a.append(l[li])
-			li+=1
-		else:
-			a.append(r[ri])
-			ri+=1
-	if li<nl:
-		for i in range(li,nl):
-			a.append(l[i])
-	elif ri<nr:
-		for i in range(ri,nr):
-			a.append(r[i])
-
-	return a
-
+"""
+Div sort is a new Hybrid sorting algorithm developed by me. 
+It perform the most suitable sorting operations on the data based on the state of data by first juding it in O(n) time for faster sorting time with reduced the time complexity.
+It combines elements from Count sort, Quick sort, Merge sort, Bubble sort and have some additional logic of its own.
+"""
 
 def divsort(a):
 	#print(a)
@@ -101,6 +55,58 @@ def divsortmain(a,reverse=False):
 	if reverse:
 		return divsort(a)[::-1]
 	return divsort(a)
+
+def countsort(a,n,mn,mx):
+	ra=[]
+	l=[0]*(mx-mn+1)
+	p=0
+	for i in range(n):
+		l[a[i]-mn]+=1
+	for i in range(len(l)):
+		for j in range(l[i]):
+			ra.append(mn+i)
+	return ra
+
+def par(a,l,r):
+	i=l-1
+	pivot=a[r]
+	for j in range(l,r):
+		if a[j]<pivot:
+			i+=1
+			a[j],a[i]=a[i],a[j]
+	a[i+1],a[r]=a[r],a[i+1]
+	return i+1
+
+def qs(a,l,r):
+	if l<r:
+		pi=par(a,l,r)
+
+		qs(a,l,pi-1)
+		qs(a,pi+1,r)
+
+
+def merge(l,r):
+	a=[]
+	li=0
+	ri=0
+	nl=len(l)
+	nr=len(r)
+	while li<nl and ri<nr:
+		if l[li]<=r[ri]:
+			a.append(l[li])
+			li+=1
+		else:
+			a.append(r[ri])
+			ri+=1
+	if li<nl:
+		for i in range(li,nl):
+			a.append(l[i])
+	elif ri<nr:
+		for i in range(ri,nr):
+			a.append(r[i])
+
+	return a
+
 
 a=[5,7,1,3,8,9,5,4,4,4,56,643,56,7,67,345,3,6554,45,64,54,5,8,8,87,87,10,87,8,3,21,5445]
 #a=[1,2,3,4,5,6,7,0,-1,-2,10]
